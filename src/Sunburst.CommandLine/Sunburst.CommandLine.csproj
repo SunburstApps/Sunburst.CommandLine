@@ -2,6 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks); net46</TargetFrameworks>
+
+    <DefineConstants Condition="'$(TargetFramework)' == 'netcoreapp1.1'">DOTNET_CORE</DefineConstants>
   </PropertyGroup>
 
   <Import Project="../dir.targets" />

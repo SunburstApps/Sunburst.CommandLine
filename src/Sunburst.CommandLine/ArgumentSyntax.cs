@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace System.CommandLine
 {
@@ -85,6 +86,14 @@ namespace System.CommandLine
 
         private bool IsHelpRequested()
         {
+#if DOTNET_CORE
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                if (Parser.GetUnreadOptionNames().Any(a => string.Equals(a, "/?", StringComparison.Ordinal)))
+                    return true;
+            }
+#endif
+
             return Parser.GetUnreadOptionNames()
                          .Any(a => string.Equals(a, @"-?", StringComparison.Ordinal) ||
                                    string.Equals(a, @"-h", StringComparison.Ordinal) ||
